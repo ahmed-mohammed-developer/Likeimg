@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import './likeimg.css'
 import Title from '../Title'
 import Img from './16.png'
@@ -12,23 +12,37 @@ import { FaHeart } from "react-icons/fa";
 
 
 export default function Likeimg() {
-    let like = false
+    const [like, setLike] = useState(false)
+    const [count, setCount] = useState(0)
+
+    function handleclick(){
+        if(!like) {
+            setLike(true)
+            setCount(count + 1)
+        } else {
+            setLike(false)
+            setCount(count - 1)
+        }
+    }
   return (
     <div className='container text-center'> {/* تحديد تنسيق العنصر */}
     <Title text={"Like Image"} className={"mt-5 mb-5"} /> {/* عرض العنوان */}
-    <h2>Likes</h2>
+    <h2>Likes : {count}</h2>
     <div className='card card-dark m-auto'>
-        <div className="card-header fs-5">
+        <div className="card-header fs-5" >
         <FaFaceSmile  style={{marginRight: 10}}/>
         <small>
             My Desgin
         </small>
         </div>
-        <img src={Img} alt='img' />
+        <img src={Img} alt='img' onDoubleClick={handleclick}/>
         <div className="card-footer fs-5">
             <IoChatbubblesOutline />
-            {like ? < FaHeart  className="text-danger"/> :
-            <FaRegHeart />
+            {like ?  (
+            < FaHeart  className="text-danger" onClick={handleclick}/>
+         ): (
+            <FaRegHeart onClick={handleclick} />
+         )
         }
 
         </div>
